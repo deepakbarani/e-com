@@ -4,9 +4,10 @@ import (
 	"api-gateway/auth"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func Routes(g *gin.Engine) {
+func Routes(g *gin.Engine, db *gorm.DB) {
 
 	// Routing Hub for all the Services
 
@@ -18,6 +19,6 @@ func Routes(g *gin.Engine) {
 			})
 		})
 
-		auth.AuthRoutes(api)
+		auth.AuthRoutes(api, db)
 	}
 }

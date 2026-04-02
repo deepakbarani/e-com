@@ -1,8 +1,9 @@
 package main
 
 import (
+	"api-gateway/api/routes"
 	"api-gateway/internal/config"
-	"api-gateway/routes"
+	"api-gateway/internal/connection"
 	"fmt"
 	"log"
 
@@ -18,6 +19,13 @@ func main() {
 		return
 	}
 
+	// Getting the database in the auth_srv
+	db, err := connection.InitDB()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 	//Initializing the gin
 	g := gin.Default()
 
@@ -25,7 +33,7 @@ func main() {
 	g.Use(gin.Recovery())
 
 	// Connected the routes
-	routes.Routes(g)
+	routes.Routes(g, db)
 
 	//Starting the Main server to listen request form the client
 	fmt.Println("<------------- Gateway Server is running ------------->")

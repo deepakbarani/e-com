@@ -1,10 +1,16 @@
 package auth
 
-import "github.com/gin-gonic/gin"
+import (
+	"api-gateway/api/repository"
 
-func AuthRoutes(api *gin.RouterGroup) ClientService {
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
 
-	authSRV := NewAuthHandler()
+func AuthRoutes(api *gin.RouterGroup, db *gorm.DB) ClientService {
+
+	auditRepo := repository.NewAuditRepository(db)
+	authSRV := NewAuthHandler(auditRepo)
 
 	auth := api.Group("/auth")
 	{
@@ -13,11 +19,12 @@ func AuthRoutes(api *gin.RouterGroup) ClientService {
 	}
 
 	goauth := api.Group("/googleoauth")
-
-	goauth.GET("/register", authSRV.GoogleRegister)
-	goauth.GET("/login", authSRV.GoogleLogin)
-	goauth.GET("/register/callback", authSRV.GoogleRegisterCallback)
-	// goauth.GET("/login/callback", authSRV.GoogleLoginCallback)
+	{
+		goauth.GET("/register", authSRV.GoogleRegister)
+		goauth.GET("/login", authSRV.GoogleLogin)
+		goauth.GET("/register/callback", authSRV.GoogleRegisterCallback)
+		goauth.GET("/login/callback", authSRV.GoogleLoginCallback)
+	}
 
 	return authSRV
 }

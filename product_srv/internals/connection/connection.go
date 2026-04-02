@@ -1,9 +1,9 @@
 package connection
 
 import (
-	"auth_srv/internals/config"
-	"auth_srv/pkg/models"
 	"fmt"
+	"product_srv/internals/config"
+	"product_srv/pkg/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,7 +17,8 @@ func InitDB() (*gorm.DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Failed connecting to DB : %v", err)
 	}
-	err = db.AutoMigrate(&models.User{}, &models.AuditTable{})
+	
+	err = db.AutoMigrate(&models.Product{},&models.AuditTable{})
 	if err != nil {
 		return nil, fmt.Errorf("Failed to Migrate : %v", err)
 	}

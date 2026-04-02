@@ -14,7 +14,7 @@ func GenerateJWT(role string, id uuid.UUID) (string, error) {
 
 	var jwtKey = config.GetKey()
 
-	expirationTime := time.Now().Add(120 * time.Hour)
+	expirationTime := time.Now().Add(240 * time.Hour)
 
 	claims := &dto.ClaimsJWT{
 		RegisteredClaims: jwt.RegisteredClaims{

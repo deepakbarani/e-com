@@ -1,6 +1,7 @@
 package config
 
 import (
+	"api-gateway/pkg/models"
 	"fmt"
 	"os"
 
@@ -14,6 +15,21 @@ func LoadConfig() error {
 		return fmt.Errorf("Failed loading the environment : %v", err)
 	}
 	return nil
+}
+
+func DBURL() string {
+
+	var con models.ConnectionString
+
+	con.User = os.Getenv("DB_USER")
+	con.DBName = os.Getenv("DB_NAME")
+	con.Password = os.Getenv("DB_PASSWORD")
+	con.SslMode = os.Getenv("DB_SSLMODE")
+	con.Port = os.Getenv("DB_PORT")
+
+	connectionString := fmt.Sprintf("user=%s port=%s dbname=%s password=%s sslmode=%s", con.User, con.Port, con.DBName, con.Password, con.SslMode)
+
+	return connectionString
 }
 
 func GetPort() string {
@@ -30,4 +46,8 @@ func GetClientID() string {
 
 func GetClientSecret() string {
 	return os.Getenv("CLIENT_SECRET")
+}
+
+func GetKey() []byte {
+	return []byte(os.Getenv("JWT_SECRET_KEY"))
 }

@@ -38,8 +38,9 @@ func main() {
 	//Create the gRPC server
 	grpcServer := grpc.NewServer()
 
-	authRepo := repository.NewAuthRepository(db)
-	authService := service.NewAuthService(authRepo)
+	auditRepo := repository.NewAuditRepository(db)
+	authRepo := repository.NewAuthRepository(db, auditRepo)
+	authService := service.NewAuthService(authRepo, auditRepo)
 
 	pb.RegisterAuthServiceServer(grpcServer, authService)
 

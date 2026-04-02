@@ -10,3 +10,4 @@ type ClaimsJWT struct {
 	UserId uuid.UUID `json:"user_id"`
 	jwt.RegisteredClaims
 }
+

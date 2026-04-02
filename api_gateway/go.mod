@@ -3,25 +3,39 @@ module api-gateway
 go 1.26.1
 
 require (
-	github.com/gofiber/fiber/v3 v3.1.0
 	github.com/gofrs/uuid v4.4.0+incompatible
+	github.com/golang-jwt/jwt/v5 v5.3.1
+	github.com/gophish/gophish v0.12.1
 	github.com/joho/godotenv v1.5.1
 	golang.org/x/oauth2 v0.34.0
 	google.golang.org/grpc v1.79.3
+	gorm.io/driver/postgres v1.6.0
+	gorm.io/gorm v1.31.1
 )
 
 require (
-	github.com/andybalholm/brotli v1.2.0 // indirect
-	github.com/gofiber/schema v1.7.0 // indirect
-	github.com/gofiber/utils/v2 v2.0.2 // indirect
-	github.com/google/uuid v1.6.0 // indirect
-	github.com/klauspost/compress v1.18.4 // indirect
-	github.com/mattn/go-colorable v0.1.14 // indirect
-	github.com/philhofer/fwd v1.2.0 // indirect
-	github.com/tinylib/msgp v1.6.3 // indirect
-	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.69.0 // indirect
+	bitbucket.org/liamstask/goose v0.0.0-20150115234039-8488cc47d90c // indirect
+	github.com/PuerkitoBio/goquery v1.5.0 // indirect
+	github.com/andybalholm/cascadia v1.0.0 // indirect
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
+	github.com/gophish/gomail v0.0.0-20200818021916-1f6d0dfd512e // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/pgx/v5 v5.6.0 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	github.com/jinzhu/gorm v1.9.12 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.1 // indirect
+	github.com/kylelemons/go-gypsy v0.0.0-20160905020020-08cad365cd28 // indirect
+	github.com/lib/pq v1.1.1 // indirect
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
+	github.com/oschwald/maxminddb-golang v1.6.0 // indirect
+	github.com/sirupsen/logrus v1.4.2 // indirect
+	github.com/ziutek/mymysql v1.5.4 // indirect
+	golang.org/x/sync v0.19.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251202230838-ff82c1b0f217 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 )
 
 require (
