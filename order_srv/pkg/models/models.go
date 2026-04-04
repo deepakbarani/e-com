@@ -15,16 +15,18 @@ type ConnectionString struct {
 	Port     string
 }
 
-type Product struct {
-	ID          uuid.UUID      `json:"id" gorm:"primaryKey"`
-	Name        string         `json:"name" gorm:"index"`
-	Description string         `json:"description" gorm:"not null"`
-	Quantity    int            `json:"quantity"`
-	AddedBy     uuid.UUID      `json:"added_by" gorm:"not null"`
-	Price       int            `json:"price" gorm:"index"`
-	CreatedAt   time.Time      `json:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+type Order struct {
+	ID            uuid.UUID `json:"id" gorm:"primaryKey"`
+	Name          string    `json:"name" gorm:"not null"`
+	Description   string    `json:"description"`
+	Quantity      int64     `json:"quantity" gorm:"not null"`
+	MerchantID    uuid.UUID `json:"merchant_id" gorm:"not null"`
+	UserID        uuid.UUID `json:"user_id" gorm:"not null"`
+	Price         int64     `json:"price" gorm:"index"`
+	TotalPrice    int64     `json:"total_price" gorm:"not null"`
+	IsPaymentDone bool      `json:"is_payment_done" gorm:"not null"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
 }
 
 type AuditTable struct {
@@ -47,10 +49,10 @@ func (a *AuditTable) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
-func (p *Product) BeforeCreate(tx *gorm.DB) (err error) {
+func (o *Order) BeforeCreate(tx *gorm.DB) (err error) {
 
-	if p.ID == uuid.Nil {
-		p.ID, err = uuid.NewV7()
+	if o.ID == uuid.Nil {
+		o.ID, err = uuid.NewV7()
 		if err != nil {
 			return err
 		}

@@ -9,19 +9,19 @@ option go_package = "./pkg/pb";
 service ProductService {
 
   // Create product
-  rpc Create(CreateProductRequest) returns(CreateProductResponse);
+  rpc CreateProduct(CreateProductRequest) returns(CreateProductResponse);
 
   // Get Products
-  rpc Get(GetProductRequest) returns(GetProductResponse);
+  rpc GetProduct(GetProductRequest) returns(GetProductResponse);
 
   // Get by id Products
-  rpc GetByID(GetByIDProductRequest) returns(GetByIDProductResponse); 
+  rpc GetByIDProduct(GetByIDProductRequest) returns(GetByIDProductResponse); 
 
   // Update product
-  rpc Update(UpdateProductRequest) returns(UpdateProductResponse);
+  rpc UpdateProduct(UpdateProductRequest) returns(UpdateProductResponse);
 
   // Delete product
-  rpc Delete(DeleteProductRequest) returns(DeleteProductResponse);
+  rpc DeleteProduct(DeleteProductRequest) returns(DeleteProductResponse);
 }
 
 //Request for the Create Product method
@@ -30,6 +30,7 @@ message CreateProductRequest {
   string description = 2;
   int64 quantity=3;
   string user_id=4;
+  int64 price=5;
 }
 
 //Response for the Create Product method
@@ -44,9 +45,10 @@ message ProductData {
   string description = 3;
   int64 quantity=4;
   string added_by=5;
-  string created_at=6;
-  string updated_at=7;
-  string deleted_at=8;
+  int64 price=6;
+  string created_at=7;
+  string updated_at=8;
+  string deleted_at=9;
 }
 
 //Request for the Get Product method
@@ -58,6 +60,7 @@ message GetProductRequest {
   string name=5;
   int64 quantity=6;
   string added_by=7;
+  int64 price=8;
 }
 
 //Response for the Get Product method

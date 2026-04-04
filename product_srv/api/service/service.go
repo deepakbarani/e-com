@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"product_srv/api/repository"
@@ -14,11 +15,11 @@ type ProductService interface {
 	// Pulling the interface form the grpc genternated
 	pb.ProductServiceServer
 
-	CreateProduct(req *pb.CreateProductRequest) (*pb.CreateProductResponse, error)
-	GetProduct(req *pb.GetProductRequest) (*pb.GetProductResponse, error)
-	GetProductById(req *pb.GetByIDProductRequest) (*pb.GetByIDProductResponse, error)
-	DeleteProduct(req *pb.DeleteProductRequest) (*pb.DeleteProductResponse, error)
-	PatchProduct(req *pb.UpdateProductRequest) (*pb.UpdateProductResponse, error)
+	CreateProduct(ctx context.Context, req *pb.CreateProductRequest) (*pb.CreateProductResponse, error)
+	GetProduct(ctx context.Context, req *pb.GetProductRequest) (*pb.GetProductResponse, error)
+	GetProductById(ctx context.Context, req *pb.GetByIDProductRequest) (*pb.GetByIDProductResponse, error)
+	DeleteProduct(ctx context.Context, req *pb.DeleteProductRequest) (*pb.DeleteProductResponse, error)
+	PatchProduct(ctx context.Context, req *pb.UpdateProductRequest) (*pb.UpdateProductResponse, error)
 }
 
 type Productservice struct {
@@ -36,7 +37,7 @@ func NewProductService(repo repository.ProductRepository, audit repository.Audit
 
 }
 
-func (s *Productservice) CreateProduct(req *pb.CreateProductRequest) (*pb.CreateProductResponse, error) {
+func (s *Productservice) CreateProduct(ctx context.Context, req *pb.CreateProductRequest) (*pb.CreateProductResponse, error) {
 
 	audit := func(data any, err any) {
 		s.audit.CreateAudit(models.AuditTable{
@@ -58,8 +59,9 @@ func (s *Productservice) CreateProduct(req *pb.CreateProductRequest) (*pb.Create
 	payload := models.Product{
 		Name:        req.Name,
 		Description: req.Description,
-		Quantity:    req.Quantity,
+		Quantity:    int(req.Quantity),
 		AddedBy:     userUUID,
+		Price:       int(req.Price),
 	}
 	code, err := s.repo.CreateProduct(payload)
 	if err != nil {
@@ -75,7 +77,7 @@ func (s *Productservice) CreateProduct(req *pb.CreateProductRequest) (*pb.Create
 	}, nil
 }
 
-func (s *Productservice) GetProduct(req *pb.GetProductRequest) (*pb.GetProductResponse, error) {
+func (s *Productservice) GetProduct(ctx context.Context, req *pb.GetProductRequest) (*pb.GetProductResponse, error) {
 
 	audit := func(data any, err any) {
 		s.audit.CreateAudit(models.AuditTable{
@@ -109,6 +111,7 @@ func (s *Productservice) GetProduct(req *pb.GetProductRequest) (*pb.GetProductRe
 		Name:     req.Name,
 		Quantity: req.Quantity,
 		AddedBy:  addedByUUID,
+		Price:    int(req.Price),
 	}
 
 	result, code, count, err := s.repo.GetProduct(page, filter)
@@ -125,8 +128,9 @@ func (s *Productservice) GetProduct(req *pb.GetProductRequest) (*pb.GetProductRe
 			Id:          p.ID.String(),
 			Name:        p.Name,
 			Description: p.Description,
-			Quantity:    p.Quantity,
+			Quantity:    int64(p.Quantity),
 			AddedBy:     p.AddedBy.String(),
+			Price:       int64(p.Price),
 			CreatedAt:   p.CreatedAt.String(),
 			UpdatedAt:   p.UpdatedAt.String(),
 			DeletedAt:   p.DeletedAt.Time.String(),
@@ -141,7 +145,7 @@ func (s *Productservice) GetProduct(req *pb.GetProductRequest) (*pb.GetProductRe
 	}, nil
 }
 
-func (s *Productservice) GetProductById(req *pb.GetByIDProductRequest) (*pb.GetByIDProductResponse, error) {
+func (s *Productservice) GetProductById(ctx context.Context, req *pb.GetByIDProductRequest) (*pb.GetByIDProductResponse, error) {
 
 	audit := func(data any, err any) {
 		s.audit.CreateAudit(models.AuditTable{
@@ -172,8 +176,9 @@ func (s *Productservice) GetProductById(req *pb.GetByIDProductRequest) (*pb.GetB
 		Id:          result.ID.String(),
 		Name:        result.Name,
 		Description: result.Description,
-		Quantity:    result.Quantity,
+		Quantity:    int64(result.Quantity),
 		AddedBy:     result.AddedBy.String(),
+		Price:       int64(result.Price),
 		CreatedAt:   result.CreatedAt.String(),
 		UpdatedAt:   result.UpdatedAt.String(),
 		DeletedAt:   result.DeletedAt.Time.String(),
@@ -187,7 +192,7 @@ func (s *Productservice) GetProductById(req *pb.GetByIDProductRequest) (*pb.GetB
 
 }
 
-func (s *Productservice) PatchProduct(req *pb.UpdateProductRequest) (*pb.UpdateProductResponse, error) {
+func (s *Productservice) PatchProduct(ctx context.Context, req *pb.UpdateProductRequest) (*pb.UpdateProductResponse, error) {
 
 	audit := func(data any, err any) {
 		s.audit.CreateAudit(models.AuditTable{
@@ -198,6 +203,8 @@ func (s *Productservice) PatchProduct(req *pb.UpdateProductRequest) (*pb.UpdateP
 		})
 	}
 
+
+	// Used the grpc "Get" function to get the data
 	updateValues := req.GetData()
 
 	productID, err := helper.StringToUUID(req.ProductId)
@@ -228,8 +235,9 @@ func (s *Productservice) PatchProduct(req *pb.UpdateProductRequest) (*pb.UpdateP
 		ID:          productUUID,
 		Name:        updateValues.Name,
 		Description: updateValues.Description,
-		Quantity:    updateValues.Quantity,
+		Quantity:    int(updateValues.Quantity),
 		AddedBy:     addedByUUID,
+		Price:       int(updateValues.Price),
 	}
 
 	result, code, err := s.repo.PatchProduct(payload, productID)
@@ -244,7 +252,7 @@ func (s *Productservice) PatchProduct(req *pb.UpdateProductRequest) (*pb.UpdateP
 		Id:          result.ID.String(),
 		Name:        result.Name,
 		Description: result.Description,
-		Quantity:    result.Quantity,
+		Quantity:    int64(result.Quantity),
 		AddedBy:     result.AddedBy.String(),
 		CreatedAt:   result.CreatedAt.String(),
 		UpdatedAt:   result.UpdatedAt.String(),
@@ -258,7 +266,7 @@ func (s *Productservice) PatchProduct(req *pb.UpdateProductRequest) (*pb.UpdateP
 	}, nil
 }
 
-func (s *Productservice) DeleteProduct(req *pb.DeleteProductRequest) (*pb.DeleteProductResponse, error) {
+func (s *Productservice) DeleteProduct(ctx context.Context, req *pb.DeleteProductRequest) (*pb.DeleteProductResponse, error) {
 
 	audit := func(data any, err any) {
 		s.audit.CreateAudit(models.AuditTable{

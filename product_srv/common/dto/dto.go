@@ -13,4 +13,5 @@ type ProductFilter struct {
 	Name     string    `json:"name"`
 	Quantity int64     `json:"quantity"`
 	AddedBy  uuid.UUID `json:"added_by"`
+	Price    int       `json:"price"`
 }

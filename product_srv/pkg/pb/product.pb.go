@@ -28,6 +28,7 @@ type CreateProductRequest struct {
 	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	Quantity      int64                  `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	UserId        string                 `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Price         int64                  `protobuf:"varint,5,opt,name=price,proto3" json:"price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -90,6 +91,13 @@ func (x *CreateProductRequest) GetUserId() string {
 	return ""
 }
 
+func (x *CreateProductRequest) GetPrice() int64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
 // Response for the Create Product method
 type CreateProductResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -143,9 +151,10 @@ type ProductData struct {
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	Quantity      int64                  `protobuf:"varint,4,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	AddedBy       string                 `protobuf:"bytes,5,opt,name=added_by,json=addedBy,proto3" json:"added_by,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	DeletedAt     string                 `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	Price         int64                  `protobuf:"varint,6,opt,name=price,proto3" json:"price,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                 `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	DeletedAt     string                 `protobuf:"bytes,9,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -215,6 +224,13 @@ func (x *ProductData) GetAddedBy() string {
 	return ""
 }
 
+func (x *ProductData) GetPrice() int64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
 func (x *ProductData) GetCreatedAt() string {
 	if x != nil {
 		return x.CreatedAt
@@ -246,6 +262,7 @@ type GetProductRequest struct {
 	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
 	Quantity      int64                  `protobuf:"varint,6,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	AddedBy       string                 `protobuf:"bytes,7,opt,name=added_by,json=addedBy,proto3" json:"added_by,omitempty"`
+	Price         int64                  `protobuf:"varint,8,opt,name=price,proto3" json:"price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -327,6 +344,13 @@ func (x *GetProductRequest) GetAddedBy() string {
 		return x.AddedBy
 	}
 	return ""
+}
+
+func (x *GetProductRequest) GetPrice() int64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
 }
 
 // Response for the Get Product method
@@ -712,28 +736,30 @@ var File_pkg_pb_product_proto protoreflect.FileDescriptor
 
 const file_pkg_pb_product_proto_rawDesc = "" +
 	"\n" +
-	"\x14pkg/pb/product.proto\x12\aproduct\"\x81\x01\n" +
+	"\x14pkg/pb/product.proto\x12\aproduct\"\x97\x01\n" +
 	"\x14CreateProductRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1a\n" +
 	"\bquantity\x18\x03 \x01(\x03R\bquantity\x12\x17\n" +
-	"\auser_id\x18\x04 \x01(\tR\x06userId\"7\n" +
+	"\auser_id\x18\x04 \x01(\tR\x06userId\x12\x14\n" +
+	"\x05price\x18\x05 \x01(\x03R\x05price\"7\n" +
 	"\x15CreateProductResponse\x12\x1e\n" +
 	"\n" +
 	"statuscode\x18\x01 \x01(\x03R\n" +
-	"statuscode\"\xe7\x01\n" +
+	"statuscode\"\xfd\x01\n" +
 	"\vProductData\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1a\n" +
 	"\bquantity\x18\x04 \x01(\x03R\bquantity\x12\x19\n" +
-	"\badded_by\x18\x05 \x01(\tR\aaddedBy\x12\x1d\n" +
+	"\badded_by\x18\x05 \x01(\tR\aaddedBy\x12\x14\n" +
+	"\x05price\x18\x06 \x01(\x03R\x05price\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\a \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt\x12\x1d\n" +
+	"updated_at\x18\b \x01(\tR\tupdatedAt\x12\x1d\n" +
 	"\n" +
-	"deleted_at\x18\b \x01(\tR\tdeletedAt\"\xb0\x01\n" +
+	"deleted_at\x18\t \x01(\tR\tdeletedAt\"\xc6\x01\n" +
 	"\x11GetProductRequest\x12\x16\n" +
 	"\x06userid\x18\x01 \x01(\tR\x06userid\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x03R\x04page\x12\x14\n" +
@@ -741,7 +767,8 @@ const file_pkg_pb_product_proto_rawDesc = "" +
 	"\x02id\x18\x04 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x12\x1a\n" +
 	"\bquantity\x18\x06 \x01(\x03R\bquantity\x12\x19\n" +
-	"\badded_by\x18\a \x01(\tR\aaddedBy\"t\n" +
+	"\badded_by\x18\a \x01(\tR\aaddedBy\x12\x14\n" +
+	"\x05price\x18\b \x01(\x03R\x05price\"t\n" +
 	"\x12GetProductResponse\x12(\n" +
 	"\x04data\x18\x01 \x03(\v2\x14.product.ProductDataR\x04data\x12\x1e\n" +
 	"\n" +
@@ -774,13 +801,14 @@ const file_pkg_pb_product_proto_rawDesc = "" +
 	"\x15DeleteProductResponse\x12\x1e\n" +
 	"\n" +
 	"statuscode\x18\x01 \x01(\x03R\n" +
-	"statuscode2\xf7\x02\n" +
-	"\x0eProductService\x12G\n" +
-	"\x06Create\x12\x1d.product.CreateProductRequest\x1a\x1e.product.CreateProductResponse\x12>\n" +
-	"\x03Get\x12\x1a.product.GetProductRequest\x1a\x1b.product.GetProductResponse\x12J\n" +
-	"\aGetByID\x12\x1e.product.GetByIDProductRequest\x1a\x1f.product.GetByIDProductResponse\x12G\n" +
-	"\x06Update\x12\x1d.product.UpdateProductRequest\x1a\x1e.product.UpdateProductResponse\x12G\n" +
-	"\x06Delete\x12\x1d.product.DeleteProductRequest\x1a\x1e.product.DeleteProductResponseB\n" +
+	"statuscode2\x9a\x03\n" +
+	"\x0eProductService\x12N\n" +
+	"\rCreateProduct\x12\x1d.product.CreateProductRequest\x1a\x1e.product.CreateProductResponse\x12E\n" +
+	"\n" +
+	"GetProduct\x12\x1a.product.GetProductRequest\x1a\x1b.product.GetProductResponse\x12Q\n" +
+	"\x0eGetByIDProduct\x12\x1e.product.GetByIDProductRequest\x1a\x1f.product.GetByIDProductResponse\x12N\n" +
+	"\rUpdateProduct\x12\x1d.product.UpdateProductRequest\x1a\x1e.product.UpdateProductResponse\x12N\n" +
+	"\rDeleteProduct\x12\x1d.product.DeleteProductRequest\x1a\x1e.product.DeleteProductResponseB\n" +
 	"Z\b./pkg/pbb\x06proto3"
 
 var (
@@ -814,16 +842,16 @@ var file_pkg_pb_product_proto_depIdxs = []int32{
 	2,  // 1: product.GetByIDProductResponse.data:type_name -> product.ProductData
 	2,  // 2: product.UpdateProductRequest.data:type_name -> product.ProductData
 	2,  // 3: product.UpdateProductResponse.data:type_name -> product.ProductData
-	0,  // 4: product.ProductService.Create:input_type -> product.CreateProductRequest
-	3,  // 5: product.ProductService.Get:input_type -> product.GetProductRequest
-	5,  // 6: product.ProductService.GetByID:input_type -> product.GetByIDProductRequest
-	7,  // 7: product.ProductService.Update:input_type -> product.UpdateProductRequest
-	9,  // 8: product.ProductService.Delete:input_type -> product.DeleteProductRequest
-	1,  // 9: product.ProductService.Create:output_type -> product.CreateProductResponse
-	4,  // 10: product.ProductService.Get:output_type -> product.GetProductResponse
-	6,  // 11: product.ProductService.GetByID:output_type -> product.GetByIDProductResponse
-	8,  // 12: product.ProductService.Update:output_type -> product.UpdateProductResponse
-	10, // 13: product.ProductService.Delete:output_type -> product.DeleteProductResponse
+	0,  // 4: product.ProductService.CreateProduct:input_type -> product.CreateProductRequest
+	3,  // 5: product.ProductService.GetProduct:input_type -> product.GetProductRequest
+	5,  // 6: product.ProductService.GetByIDProduct:input_type -> product.GetByIDProductRequest
+	7,  // 7: product.ProductService.UpdateProduct:input_type -> product.UpdateProductRequest
+	9,  // 8: product.ProductService.DeleteProduct:input_type -> product.DeleteProductRequest
+	1,  // 9: product.ProductService.CreateProduct:output_type -> product.CreateProductResponse
+	4,  // 10: product.ProductService.GetProduct:output_type -> product.GetProductResponse
+	6,  // 11: product.ProductService.GetByIDProduct:output_type -> product.GetByIDProductResponse
+	8,  // 12: product.ProductService.UpdateProduct:output_type -> product.UpdateProductResponse
+	10, // 13: product.ProductService.DeleteProduct:output_type -> product.DeleteProductResponse
 	9,  // [9:14] is the sub-list for method output_type
 	4,  // [4:9] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name

@@ -79,6 +79,9 @@ func (d *Productdatabase) GetProduct(page dto.Pagination, filter dto.ProductFilt
 	if filter.Quantity != 0 {
 		query = query.Where("quantity = ?", filter.Quantity)
 	}
+	if filter.Price != 0 {
+		query = query.Where("price = ?", filter.Price)
+	}
 
 	if err := query.Find(&row).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

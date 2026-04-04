@@ -1,0 +1,81 @@
+
+syntax = "proto3";
+
+package order;
+
+option go_package = "./pkg/pb";
+
+// Order service method 
+service OrderService {
+
+  // Create Order
+  rpc CreateOrder(CreateOrderRequest) returns(CreateOrderResponse);
+
+  // Get Orders
+  rpc GetOrder(GetOrderRequest) returns(GetOrderResponse);
+
+  // Get by id Orders
+  rpc GetByIDOrder(GetByIDOrderRequest) returns(GetByIDOrderResponse); 
+
+}
+
+//Request for the Create Order method
+message CreateOrderRequest {
+  string name=1;
+  int64 price=2;
+  int64 quantity=3;
+  string user_id=4;
+  int64 total_price=5;
+}
+
+//Response for the Create Order method
+message CreateOrderResponse {
+  int64 statuscode=1;
+}
+
+// Order data
+message OrderData {
+  string id=1;
+  string name=2;
+  string description = 3;
+  int64 quantity=4;
+  string merchant_id=5;
+  int64 price=6;
+  bool is_payment_done=7;
+  int64 total_price=8;
+  string created_at=9;
+  string updated_at=10;
+  string user_id=11;
+}
+
+//Request for the Get Order method
+message GetOrderRequest {
+  string userid=1;
+  int64 page=2;
+  int64 limit=3;
+  string id=4;
+  string name=5;
+  int64 quantity=6;
+  string added_by=7;
+  int64 price=8;
+}
+
+//Response for the Get Order method
+message GetOrderResponse {
+  repeated OrderData data=1;
+  int64 statuscode=2;
+  int64 count = 3;
+}
+
+//Request for the Get by id Order method
+message GetByIDOrderRequest {
+  string user_id=1;
+  string order_id=2;
+}
+
+//Response forl the Get by id Order method
+message GetByIDOrderResponse {
+  OrderData data=1;
+  int64 statuscode=2;
+}
+
